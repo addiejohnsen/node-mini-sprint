@@ -43,15 +43,16 @@ const handleRequest = function(req, res) {
     // get a randomIndex
     var randomIndex = getRandomInt(0, quotes.length);
     // generate random quote
-    var randomQuote = quote[randomIndex];
+    var randomQuote = quotes[randomIndex];
     // write headers
     res.writeHead(200, {...headers, "Content-Type": 'application/json'});
     // end response & send back quote
     res.end(JSON.stringify(randomQuote));
+    console.log('test')
 
   }
   // TODO: POST/CREATE  // add a quote
-  else if ((req.url == '/quote/' || req.url == '/quote/') && req.method == "POST") {
+  else if ((req.url == '/quote' || req.url == '/quote') && req.method == "POST") {
     //COLLECT THE DATA AND STORE THE QUOTE
     // Deal with the Request
     // create a variable to hold the data
@@ -77,6 +78,7 @@ const handleRequest = function(req, res) {
 
 //CATCH ALL ROUTE
   else {
+    console.log('error block');
     res.writeHead(404, headers);
     res.end('Page not found');
   }
