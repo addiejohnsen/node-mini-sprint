@@ -60,7 +60,8 @@ const handleRequest = function(req, res) {
     // receive data in chunks (response comes as a readable stream) // chunk is typ Buffer
     req.on('data', (chunk) => {
       bodyData += chunk.toString()
-    }).on('end', () => {
+    });
+    req.on('end', () => {
       // parse data
       const quote = JSON.parse(bodyData);
       quote.objectId = quotes.length;
