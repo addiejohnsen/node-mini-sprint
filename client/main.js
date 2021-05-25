@@ -7,21 +7,18 @@ $(document).ready(function () {
   $('#submit').click((e) => {
     e.preventDefault();
     let quote = $('input').val();
+    console.log('event quote', quote);
     addQuote(quote);
-    // $('input').val("");
-    // $('#response').text('Thank you for submitting your quote');
-
   });
 
 
-
-//testign
 
   function getQuote() {
     //YOUR CODE HERE, Add a GET request
     // URL, sucess callback function
     $.get('http://localhost:3000/quote', function (data) {
       // declare selector for jquery
+      // data not coming back formated propery
       console.log(data);
       // quote gets added to #quote element value
       $('#quote').text(data);
@@ -34,10 +31,11 @@ $(document).ready(function () {
 
     //(url, [data], callback)
     $.post('http://localhost:3000/quote', quote, function (data) {
-      console.log('test');
+      console.log('post success');
     });
     $('#response').text('Thank you for submitting your quote!');
     $("input:text").val("");
+    // being sent as an empty object.....
   };
 
       // $.ajax({
