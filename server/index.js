@@ -8,10 +8,9 @@ const port = 3000;
 const app = express();
 app.use(cors());
 app.use(bodyParser.text());  // we need a string since incoming text is a string
-// get static files
+// get static files - does this do anything actually?????
 app.use(express.static('client'));
 
-// TODO: Fill with strings of your favorite quotes :) [x] done
 const quotes = [
   '"All happy families are alike; each unhappy family is unhappy in its own way." - Tolstoy',
   '"Words without experience are meaningless." - Nabokov',
@@ -35,9 +34,10 @@ app.get('/quote', function (req, res) {
   var randomIndex = getRandomInt(0, quotes.length);
   //generate a random quote
   var randomQuote = quotes[randomIndex];
+  console.log('randomQuote', randomQuote);
   //handle response
   // send random quote back to client in response.
-  res.status(200).send(JSON.stringify(randomQuote));
+  res.status(200).send(randomQuote);  // don't need to stringify here
 });
 
 app.post('/quote', function (req, res) {
@@ -47,19 +47,16 @@ app.post('/quote', function (req, res) {
   console.log(quotes);
   //hand responses
   res.status(201).send('Quote submitted');
-
 });
 
+//TODO: Error handling
 // catch any error
 
 app.listen(port, () => {
   console.log('Express server is running')
 });
-
-// console.log('Server is running in the terminal!');
-// console.log(`Listening on http://localhost:${port}`);
-
 module.exports = app;
+// just incase
 
 
 
