@@ -5,7 +5,9 @@ const headers = {
   "access-control-allow-origin": "*",
   "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
   "access-control-allow-headers": "content-type, accept",
-  "access-control-max-age": 1
+  "Access-Control-Allow-Credentials" : true,
+  "access-control-max-age": 1,
+  "Content-Type": 'application/json'
 };
 
 const port = 3000;
@@ -48,32 +50,35 @@ const handleRequest = function(req, res) {
     res.writeHead(200, {...headers, "Content-Type": 'application/json'});
     // end response & send back quote
     res.end(JSON.stringify(randomQuote));
-    console.log('test')
-
+    console.log('success')
   }
   // TODO: POST/CREATE  // add a quote
-  else if ((req.url == '/quote' || req.url == '/quote') && req.method == "POST") {
+  else if ((req.url == '/quote/' || req.url == '/quote') && req.method == "POST") {
     //COLLECT THE DATA AND STORE THE QUOTE
     // Deal with the Request
     // create a variable to hold the data
-    let bodyData = '';
+    let bodyData = "";
+    var quote;
     // listen for an on data event
     // receive data in chunks (response comes as a readable stream) // chunk is typ Buffer
+
+    /// not getting into this block
     req.on('data', (chunk) => {
-      bodyData += chunk.toString()
-    });
-    req.on('end', () => {
+      console.log('chunk', chunk);
+      bodyData += chunk.toString();
+    })
+    .on('end', () => {
       // parse data
-      const quote = JSON.parse(bodyData);
-      quote.objectId = quotes.length;
-      // save quote to quotes array
+      quote = Buffer.from(bodyData).toString();
+      // console.log('quote', quote);
       quotes.push(quote);
     })
 
     // deal with the Response
-    res.writeHead(201, {...headers, "Content-Type": 'application/json'});
+    res.writeHead(201, headers);
     // end response
-    res.end(JSON.stringify(bodyData));
+    console.log(quote);
+    res.end(quote);
   }
 
 //CATCH ALL ROUTE
