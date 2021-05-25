@@ -7,7 +7,7 @@ const port = 3000;
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.text());  // we need a string since incoming text is a string
+app.use(bodyParser.urlencoded());  // we need a string since incoming text is a string
 // get static files - does this do anything actually?????
 app.use(express.static('client'));
 
@@ -27,6 +27,10 @@ function getRandomInt(min, max) {
 }
 
 // refactor routes using express
+
+app.get('/', function (req, res) {
+  res.redirect(301, '/quote');
+})
 // how to handle multiple endpoints?
 app.get('/quote', function (req, res) {
   // handle request
@@ -34,7 +38,7 @@ app.get('/quote', function (req, res) {
   var randomIndex = getRandomInt(0, quotes.length);
   //generate a random quote
   var randomQuote = quotes[randomIndex];
-  console.log('randomQuote', randomQuote);
+  // console.log('randomQuote', randomQuote);
   //handle response
   // send random quote back to client in response.
   res.status(200).send(randomQuote);  // don't need to stringify here
@@ -43,20 +47,27 @@ app.get('/quote', function (req, res) {
 app.post('/quote', function (req, res) {
   // handle request
   //  console.log(req.body); // this is the body of the request it is default an empty
-  quotes.push(req.body);
-  console.log(quotes);
+  console.log('data should be here', req.body.quote);
+  quotes.push(req.body.quote);
+  console.log('quotes array', quotes);
+
   //hand responses
   res.status(201).send('Quote submitted');
 });
 
-//TODO: Error handling
-// catch any error
+// catch any error - reading says that express has built end error handling
+app.all('*', (req, res, next) => {
+  res.status(404).json({
+    status: 'failure',
+    message: 'ERRRRRRRRRRROR'
+  });
+});
 
 app.listen(port, () => {
   console.log('Express server is running')
 });
 module.exports = app;
-// just incase
+// just incase :)
 
 
 

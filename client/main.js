@@ -7,7 +7,7 @@ $(document).ready(function () {
   $('#submit').click((e) => {
     e.preventDefault();
     let quote = $('input').val();
-    console.log('event quote', quote);
+    // console.log('event quote', quote);
     addQuote(quote);
   });
 
@@ -30,9 +30,9 @@ $(document).ready(function () {
     //YOUR CODE HERE, Add a POST request
 
     //(url, [data], callback)
-    $.post('http://localhost:3000/quote', quote, function (data) {
+    $.post('http://localhost:3000/quote', {quote: quote}, function (data) {
       console.log('post success');
-    });
+    }, "json");
     $('#response').text('Thank you for submitting your quote!');
     $("input:text").val("");
     // being sent as an empty object.....
