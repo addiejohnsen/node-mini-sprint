@@ -31,6 +31,7 @@ function getRandomInt(min, max) {
 const handleRequest = function(req, res) {
   console.log(`Endpoint: ${req.url} Method: ${req.method}`);
 
+
   // redirect users to /quote if they try to hit the homepage. This should already work, no changes needed
   if (req.url == '/') {
     console.log('redirecting');
@@ -59,6 +60,7 @@ const handleRequest = function(req, res) {
     // create a variable to hold the data
     let bodyData = "";
     var quote;
+    console.log('We got a post');
     // listen for an on data event
     // receive data in chunks (response comes as a readable stream) // chunk is typ Buffer
 

@@ -18,7 +18,6 @@ $(document).ready(function () {
 
 
   function getQuote() {
-
     //YOUR CODE HERE, Add a GET request
     // URL, sucess callback function
     $.get('http://localhost:3000/quote', function (data) {
@@ -26,7 +25,7 @@ $(document).ready(function () {
       console.log(data);
       // quote gets added to #quote element value
       $('#quote').text(data);
-    })
+    });
   }
 
   function addQuote(quote) {
@@ -35,28 +34,27 @@ $(document).ready(function () {
 
     //(url, [data], callback)
     $.post('http://localhost:3000/quote', quote, function (data) {
-      // add to response paragraph
-      // CALLBACK ISN'T FIRING OFF
+      console.log('test');
     });
     $('#response').text('Thank you for submitting your quote!');
     $("input:text").val("");
   };
+
+      // $.ajax({
+      //   type: 'POST',
+      //   url: 'http://127.0.0.1:3000/quote',
+      //   crossDomain: true,
+      //   data: quote,
+      //   contentType: 'application/json',
+      //   success: (result) => console.log(success),
+      //   error: (error) => console.error(error),
+      // })
+// };
 });
 
 
     // })
 
-
-    // original ajaxx\
-    // $.ajax({
-    //   type: 'POST',
-    //   url: 'http://127.0.0.1:3000/quote',
-    //   crossDomain: true,
-    //   data: JSON.stringify(quote),
-    //   contentType: 'application/json',
-    //   success: (result) => console.log(success),
-    //   error: (error) => console.log(error),
-    // })
 
 
 
