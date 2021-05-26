@@ -1,0 +1,32 @@
+{
+  "name": "node-mini-sprint",
+  "version": "1.0.0",
+  "description": "This repo contains a client directory and a server directory. While it is all in one repo, they must be run separately and you should consider them to be 2 separate applications.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/addiejohnsen/node-mini-sprint.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/addiejohnsen/node-mini-sprint/issues"
+  },
+  "homepage": "https://github.com/addiejohnsen/node-mini-sprint#readme",
+  "dependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.2",
+    "@babel/preset-react": "^7.13.13",
+    "babel-loader": "^8.2.2",
+    "path": "^0.12.7",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "webpack": "^5.37.1",
+    "webpack-cli": "^4.7.0"
+  }
+}
