@@ -14,13 +14,13 @@ app.use(bodyParser.urlencoded());  // we need a string since incoming text is a 
 // get static files - does this do anything actually?????
 app.use(express.static('client'));
 
-const quotes = [
-  '"All happy families are alike; each unhappy family is unhappy in its own way." - Tolstoy',
-  '"Words without experience are meaningless." - Nabokov',
-  '"Dogs are clever fellows; they know all about politics [...]" - Gogol',
-  '"Love, friendship and respect do not unite people as much as a common hatred for something." - Chekhov',
-  '"Love, like fire, goes out without fuel." - Lermontov'
-];
+// const quotes = [
+//   '"All happy families are alike; each unhappy family is unhappy in its own way." - Tolstoy',
+//   '"Words without experience are meaningless." - Nabokov',
+//   '"Dogs are clever fellows; they know all about politics [...]" - Gogol',
+//   '"Love, friendship and respect do not unite people as much as a common hatred for something." - Chekhov',
+//   '"Love, like fire, goes out without fuel." - Lermontov'
+// ];
 
 //Utility Function to return a random integer
 function getRandomInt(min, max) {
@@ -38,40 +38,33 @@ app.get('/', function (req, res) {
 app.get('/quote', function (req, res) {
   var data = req.body;
   models.getQuoteFromDb((err, result) => {
-  if (err) {
-    res.status(400).send('ERROR');
-  } else {
-    var randomQuote = result[0].quote;
-    res.status(200).send(randomQuote);
-  }
+    if (err) {
+      res.status(400).send('ERROR');
+    } else {
+      var randomQuote = result[0].quote;
+      console.log('result', result[0].quote);
+      res.status(200).send(randomQuote);
+    }
   });
-  // handle request
-  // get a random index
-  // var randomIndex = getRandomInt(0, quotes.length);
-  // //generate a random quote
-  // var randomQuote = quotes[randomIndex];
-  // // console.log('randomQuote', randomQuote);
-  // //handle response
-  // send random quote back to client in response.
-  // res.status(200).send(randomQuote);  // don't need to stringify here
 });
 
 app.post('/quote', function (req, res) {
   // handle request
-  //  console.log(req.body); // this is the body of the request it is default an empty
-  console.log('data should be here', req.body.quote);
-  quotes.push(req.body.quote);
-  console.log('quotes array', quotes);
 
-  //hand responses
-  res.status(201).send('Quote submitted');
+  models.insertQuote(req.body.quote, (err, result) => {
+    if (err) {
+      res.status(400).send('ERROR');
+    } else {
+      res.status(201).send('Quote submitted');
+    }
+  })
 });
 
 // catch any error - reading says that express has built end error handling
 app.all('*', (req, res, next) => {
   res.status(404).json({
     status: 'failure',
-    message: 'ERRRRRRRRRRROR'
+    message: 'Error',
   });
 });
 

@@ -10,16 +10,12 @@ import $ from 'jquery';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    // state goes within the constructor
     this.state = {
       quote: '',
       response: false,
     };
-
-    // bindings
     this.handleSubmit = this.handleSubmit.bind(this);
   }
- // when the user enters data and clicks submit, post the quote to the server
 
   componentDidMount() {
     // runs after the component has been rendered to DOM
@@ -37,12 +33,12 @@ class App extends React.Component {
       contentType: 'applcation/json',
       data: {},
       success: (data) => {
-       console.log('ajax worked');
-       console.log(data);
-       // setState
-       this.setState({
-         quote: data,
-       })
+        console.log('ajax worked');
+        console.log(data);
+        // setState
+        this.setState({
+          quote: data,
+        })
       },
       error: (err) => {
         console.error('Error', err);
@@ -55,16 +51,13 @@ class App extends React.Component {
     $.ajax({
       type: 'POST',
       url: 'http://localhost:3000/quote',
-      data: {quote: quote},
+      data: { quote: quote },
       success: (result) => {
-        console.log(result); // what's being sent from the model
-        console.log(quote);
+        console.log('successfully posted');
         var testing = true;
-        //change page render
         this.setState({
           response: testing,
         })
-        console.log(this.state);
       },
       error: (err) => {
         console.log('Error: ', err);
@@ -72,15 +65,13 @@ class App extends React.Component {
     });
   };
 
-    // Add our click handler
-    handleSubmit(e) {
-      e.preventDefault();
-      let quote = $('input').val();
-      this.addQuote(quote);
-      //  clear the field on click
-      $("input:text").val("");
-    };
-
+  // Add our click handler
+  handleSubmit(e) {
+    e.preventDefault();
+    let quote = $('input').val();
+    this.addQuote(quote);
+    $("input:text").val("");
+  };
 
 
   // render
@@ -89,9 +80,9 @@ class App extends React.Component {
       <div>
         <h1>Random Quote Generator</h1>
         <div id="quoteDiv">
-          <QuoteComponent quote={this.state.quote}/>
+          <QuoteComponent quote={this.state.quote} />
         </div>
-        <FormComponent quote={this.state.quote} onSubmit={this.handleSubmit}/>
+        <FormComponent quote={this.state.quote} onSubmit={this.handleSubmit} />
         <div id="responseDiv">
           <ResponseComponent response={this.state.response} />
         </div>

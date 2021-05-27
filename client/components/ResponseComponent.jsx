@@ -6,10 +6,6 @@ import App from './App.jsx';
 
 // React component
 const Response = function (props) {
-  console.log("props", props);
-
-
-
   return (
     <p id="response">{props.response ? "Thank you for submitting your quote!" : ""}</p>
   )
