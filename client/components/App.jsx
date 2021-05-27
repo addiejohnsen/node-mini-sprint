@@ -4,21 +4,95 @@ import ReactDOM from 'react-dom';
 import FormComponent from './FormComponent.jsx';
 import QuoteComponent from './QuoteComponent.jsx';
 import ResponseComponent from './ResponseComponent';
+import $ from 'jquery';
+
+// import controllers from './controllers.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     // state goes within the constructor
     this.state = {
-
+      quote: '',
+      response: false,
     };
+
+    // bindings
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-  // life cycle methods
-  // componentDidMount() {
+ // when the user enters data and clicks submit, post the quote to the server
 
-  // }
+  componentDidMount() {
+    // runs after the component has been rendered to DOM
+    const { quote } = this.state;
+    console.log(this.state);
+    this.getQuote();
+  };
 
-  // Add our click handler here ?
+
+  // CONTROLLERS HERE
+  getQuote(callback) {
+    $.ajax({
+      type: 'GET',
+      url: 'http://localhost:3000/quote',
+      contentType: 'applcation/json',
+      data: {},
+      success: (data) => {
+       console.log('ajax worked');
+       console.log(data);
+       // setState
+       this.setState({
+         quote: data,
+       })
+      },
+      error: (err) => {
+        console.error('Error', err);
+      },
+    });
+  };
+
+
+  addQuote(quote) {
+    $.ajax({
+      type: 'POST',
+      url: 'http://localhost:3000/quote',
+      data: {quote: quote},
+      success: (result) => {
+        console.log(result); // what's being sent from the model
+        console.log(quote);
+        var testing = true;
+        //change page render
+        this.setState({
+          response: testing,
+        })
+        console.log(this.state);
+      },
+      error: (err) => {
+        console.log('Error: ', err);
+      }
+    });
+  };
+
+
+
+  //   // $.post('http://localhost:3000/quote', {quote: quote}, function (data) {
+  //   //   console.log('post success');
+  //   //   $('#response').text('Thank you for submitting your quote!');
+  //   //   $("input:text").val("");
+  //   // }, "json");
+  // };
+
+
+    // Add our click handler
+    handleSubmit(e) {
+      e.preventDefault();
+      let quote = $('input').val();
+      this.addQuote(quote);
+      //  clear the field on click
+      $("input:text").val("");
+    };
+
+
 
   // render
   render() {
@@ -26,16 +100,15 @@ class App extends React.Component {
       <div>
         <h1>Random Quote Generator</h1>
         <div id="quoteDiv">
-          <QuoteComponent />
+          <QuoteComponent quote={this.state.quote}/>
         </div>
-        FORM COMPONENT
-        <FormComponent />
+        <FormComponent quote={this.state.quote} onSubmit={this.handleSubmit}/>
         <div id="responseDiv">
-          <ResponseComponent />
+          <ResponseComponent response={this.state.response} />
         </div>
       </div>
     );
   };
-}
+};
 
 export default App;

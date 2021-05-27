@@ -9,7 +9,7 @@ const Quote = function(props) {
 
   // return
   return (
-    <h2 id="quote"> QUOTE COMPONENT - TO MAKE DYNAMIC </h2>
+    <h2 id="quote"> {props.quote}</h2>
   );
 };
 
