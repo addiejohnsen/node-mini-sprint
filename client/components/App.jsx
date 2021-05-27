@@ -6,7 +6,6 @@ import QuoteComponent from './QuoteComponent.jsx';
 import ResponseComponent from './ResponseComponent';
 import $ from 'jquery';
 
-// import controllers from './controllers.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -72,16 +71,6 @@ class App extends React.Component {
       }
     });
   };
-
-
-
-  //   // $.post('http://localhost:3000/quote', {quote: quote}, function (data) {
-  //   //   console.log('post success');
-  //   //   $('#response').text('Thank you for submitting your quote!');
-  //   //   $("input:text").val("");
-  //   // }, "json");
-  // };
-
 
     // Add our click handler
     handleSubmit(e) {

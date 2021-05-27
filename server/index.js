@@ -3,7 +3,10 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const models = require('../database/models.js')
+const mysql = require('mysql');
 const port = 3000;
+
 
 const app = express();
 app.use(cors());
@@ -33,15 +36,24 @@ app.get('/', function (req, res) {
 })
 // how to handle multiple endpoints?
 app.get('/quote', function (req, res) {
+  var data = req.body;
+  models.getQuoteFromDb((err, result) => {
+  if (err) {
+    res.status(400).send('ERROR');
+  } else {
+    var randomQuote = result[0].quote;
+    res.status(200).send(randomQuote);
+  }
+  });
   // handle request
   // get a random index
-  var randomIndex = getRandomInt(0, quotes.length);
-  //generate a random quote
-  var randomQuote = quotes[randomIndex];
-  // console.log('randomQuote', randomQuote);
-  //handle response
+  // var randomIndex = getRandomInt(0, quotes.length);
+  // //generate a random quote
+  // var randomQuote = quotes[randomIndex];
+  // // console.log('randomQuote', randomQuote);
+  // //handle response
   // send random quote back to client in response.
-  res.status(200).send(randomQuote);  // don't need to stringify here
+  // res.status(200).send(randomQuote);  // don't need to stringify here
 });
 
 app.post('/quote', function (req, res) {
